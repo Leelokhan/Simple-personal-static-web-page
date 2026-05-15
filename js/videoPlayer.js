@@ -18,7 +18,7 @@ class VideoPlayer {
             
             if (data.vd && data.vd.length > 0) {
                 data.vd.forEach(file => {
-                    this.videoFiles.push('vd/' + file);
+                    this.videoFiles.push('vd/' + encodeURIComponent(file));
                     this.videoNames.push(decodeURIComponent(file.replace(/\.(mp4|webm|ogg)$/i, '')));
                 });
                 

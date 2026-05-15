@@ -146,7 +146,7 @@
             .then(data => {
                 if (data.bg && data.bg.length > 0) {
                     data.bg.forEach(file => {
-                        bgImages.push('bg/' + file);
+                        bgImages.push('bg/' + encodeURIComponent(file));
                     });
                     document.body.style.backgroundImage = `url('${bgImages[0]}')`;
                 }

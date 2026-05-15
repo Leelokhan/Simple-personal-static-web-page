@@ -24,7 +24,7 @@ const musicPlayer = {
             .then(data => {
                 if (data.mc && data.mc.length > 0) {
                     data.mc.forEach(file => {
-                        this.playlist.push('mc/' + file);
+                        this.playlist.push('mc/' + encodeURIComponent(file));
                         this.trackNames.push(decodeURIComponent(file.replace(/\.(flac|mp3)$/i, '')));
                     });
                     this.loadTrack(0);
