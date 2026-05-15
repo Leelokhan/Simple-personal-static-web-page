@@ -23,6 +23,8 @@ Examples: [nz.562427418.xyz](https://nz.562427418.xyz/), [z.meizizi.nyc.mn](http
 
 <img width="1913" height="916" alt="image" src="https://github.com/user-attachments/assets/72860bdd-1b58-49bf-af67-e9d508e1c727" />
 <img width="1909" height="918" alt="image" src="https://github.com/user-attachments/assets/83add36b-1ddd-4330-b1a8-45d888497e49" />
+<img width="1902" height="893" alt="ScreenShot_2026-05-15_183303_639" src="https://github.com/user-attachments/assets/73582072-d7c5-4f08-a15e-b2586a99a24f" />
+
 
 Try my code in the `live2d` window file. I set it to show only one model and cannot switch to others. Also updated the music player code.
 
