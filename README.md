@@ -1,4 +1,4 @@
-更新能直接一键部署在vercel
+更新能直接一键部署在vercel 和 cloudflare
 
 用ai做一个简单的网页给自己练练手，培养一下兴趣爱好
 
@@ -34,8 +34,28 @@ https://github.com/Leelokhan/Simple-IP-Check-Page
 
 
 后续可能会更新！
+vercel绑定GitHub就可以了
+cf用法：
+<img width="633" height="474" alt="ScreenShot_2026-05-15_170616_101" src="https://github.com/user-attachments/assets/5eedc4c3-ed7b-459e-a14b-5970b1d32f2f" />
+<img width="586" height="648" alt="ScreenShot_2026-05-15_170712_445" src="https://github.com/user-attachments/assets/401de982-0006-42a9-9e09-c051b4a4be50" />
+然后正常部署就行了
 
-用法：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓过时了↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
 
 ![image](https://github.com/user-attachments/assets/647d328e-dc62-450e-a397-9ecb07ac5106)
 
