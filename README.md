@@ -1,3 +1,5 @@
+[English version](README_EN.md) | [中文版本](README.md)
+
 更新能直接一键部署在vercel 和 cloudflare
 
 用ai做一个简单的网页给自己练练手，培养一下兴趣爱好
@@ -39,19 +41,6 @@ cf用法：
 <img width="633" height="474" alt="ScreenShot_2026-05-15_170616_101" src="https://github.com/user-attachments/assets/5eedc4c3-ed7b-459e-a14b-5970b1d32f2f" />
 <img width="586" height="648" alt="ScreenShot_2026-05-15_170712_445" src="https://github.com/user-attachments/assets/401de982-0006-42a9-9e09-c051b4a4be50" />
 然后正常部署就行了
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 --------------------------↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓过时了↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
@@ -96,16 +85,3 @@ dash.cloudflare.com 注册一个cf账号解析域名 注册完cf点注册域，�
 ![image](https://github.com/user-attachments/assets/ba33e92e-f6a9-43f5-ad85-835bba6affe7)
 
 ![image](https://github.com/user-attachments/assets/5d717f4b-25a1-4ed4-ad68-457dfb4f6f58)
-
-
-
-
-
-
-
-
-
-
-
-     
-
