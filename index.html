@@ -1,17 +1,28 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>这里修改网页名</title>
+        <title>个人主页</title>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" href="avatar.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="css/style.css">
         <style>
             .live2d {
                 position: fixed;
                 bottom : 0;
-                left : 200px;
+                left : 100px;
+                z-index: 1;
+            }
+            @media (max-width: 768px) {
+                .live2d {
+                    left: 0;
+                    width: 200px;
+                    height: 533px;
+                }
             }
             body {
-                background-size: contain;
+                background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;
                 background-attachment: fixed;
@@ -19,14 +30,13 @@
                 padding: 0;
                 height: 100vh;
                 width: 100vw;
+                overflow: hidden;
             }
             
-            /* 添加鼠标滚轮缩放功能 */
             body {
                 cursor: url('sb/1.ico'), auto;
             }
             
-            /* 鼠标跟随图片样式 */
             #follow-mouse {
                 position: absolute;
                 pointer-events: none;
@@ -54,41 +64,52 @@
         </style>
     </head>
     <body>
-        <div style="position:fixed;top:0;background-color: white;">
-            <button id="Change" class="active">换人</button>
-            <button id="texure" class="active">换衣服</button>
-            <button id="changeBg" class="active">切换背景</button>
-            <input type="range" id="bgScaleSlider" min="10" max="500" value="100" class="active">
-            <text>当前：模型编号 </text><text id="model_id"></text><text>；衣服编号 </text><text id="texure_id"></text>
-            <input type="number" id="model" placeholder="模型编号">
-            <input type="number" id="Texure" placeholder="衣服编号">
+        <div class="glass-panel top-controls">
+            <button id="Change"><i class="fas fa-user-friends"></i> 换人</button>
+            <button id="texure"><i class="fas fa-tshirt"></i> 换衣服</button>
+            <button id="changeBg"><i class="fas fa-image"></i> 切换背景</button>
+            <div style="display:flex; align-items:center; gap:5px;">
+                <i class="fas fa-search-plus"></i>
+                <input type="range" id="bgScaleSlider" min="10" max="500" value="100">
+            </div>
+            <div style="font-size:12px; opacity:0.8;">
+                模型:<span id="model_id"></span> | 衣服:<span id="texure_id"></span>
+            </div>
+            <input type="number" id="model" placeholder="ID" style="width:40px; border-radius:10px; padding:2px 5px; border:1px solid #ddd;">
+            <input type="number" id="Texure" placeholder="衣" style="width:40px; border-radius:10px; padding:2px 5px; border:1px solid #ddd;">
             <button onclick="JumpToModel()">跳转</button>
-            <a href="live2d_3">Live2d Cubism 3</a>
-            <a target="_blank" href="https://github.com/Leelokhan/Simple-personal-static-web-page">Github</a>
+            <a href="live2d_3">Live2d v3</a>
+            <a target="_blank" href="https://github.com/Leelokhan/Simple-personal-static-web-page"><i class="fab fa-github"></i></a>
         </div>
-        <ol id="model_info" style="margin-top:30px ;"></ol>
+
+        <ol id="model_info" style="margin-top:80px ; position:fixed; left:20px; z-index:2;"></ol>
+        
         <canvas class="live2d" id="live2d" width="300" height="800"></canvas>
         <div id="follow-mouse"></div>
-        <div id="music-player" style="position: fixed; right: 20px; top: 20px; width: 150px; background: rgba(255,255,255,0.8); padding: 10px; border-radius: 5px;">
-            <h3 style="margin: 0 0 10px 0; font-size: 14px;">音乐播放器</h3>
-            <button onclick="musicPlayer.playPause()" style="font-size: 12px;">播放/暂停</button>
-            <button onclick="musicPlayer.prevTrack()" style="font-size: 12px;">上一首</button>
-            <button onclick="musicPlayer.nextTrack()" style="font-size: 12px;">下一首</button>
-            <div style="margin-top: 10px;">
-                <span style="font-size: 12px;">音量:</span>
-                <input type="range" min="0" max="1" step="0.1" value="1" oninput="musicPlayer.setVolume(this.value)" style="width: 100px;">
+
+        <div id="music-player" class="glass-panel">
+            <h3><i class="fas fa-music"></i> 音乐播放器</h3>
+            <div class="player-controls">
+                <button onclick="musicPlayer.prevTrack()"><i class="fas fa-step-backward"></i></button>
+                <button id="music-play-pause" onclick="musicPlayer.playPause()"><i class="fas fa-play"></i></button>
+                <button onclick="musicPlayer.nextTrack()"><i class="fas fa-step-forward"></i></button>
             </div>
+            <div class="volume-control">
+                <i class="fas fa-volume-up"></i>
+                <input type="range" min="0" max="1" step="0.1" value="1" oninput="musicPlayer.setVolume(this.value)">
+            </div>
+            <div class="playlist" id="music-playlist"></div>
         </div>
         
-        <div id="video-player" style="position: fixed; right: 20px; bottom: 20px; width: 300px; background: rgba(255,255,255,0.8); padding: 10px; border-radius: 5px;">
-            <video id="video" width="300" controls></video>
-            <div style="margin-top: 10px; margin-bottom: 10px; text-align: center;">
-                <span id="video-name" style="font-size: 12px;">正在加载视频...</span>
+        <div id="video-player" class="glass-panel" style="position: fixed; right: 20px; bottom: 20px;">
+            <video id="video" controls></video>
+            <div style="text-align: center;">
+                <span id="video-name">正在加载视频...</span>
             </div>
-            <div style="margin-top: 10px; display: flex; justify-content: space-between;">
-                <button id="video-play-pause" style="font-size: 12px;">播放/暂停</button>
-                <button id="video-prev" style="font-size: 12px;">上一个</button>
-                <button id="video-next" style="font-size: 12px;">下一个</button>
+            <div class="player-controls">
+                <button id="video-prev"><i class="fas fa-step-backward"></i></button>
+                <button id="video-play-pause"><i class="fas fa-play"></i></button>
+                <button id="video-next"><i class="fas fa-step-forward"></i></button>
             </div>
         </div>
     </body>
