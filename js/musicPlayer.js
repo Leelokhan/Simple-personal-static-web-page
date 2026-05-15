@@ -19,22 +19,14 @@ const musicPlayer = {
     },
 
     loadPlaylist: function() {
-        fetch('mc/')
-            .then(response => response.text())
-            .then(text => {
-                const parser = new DOMParser();
-                const html = parser.parseFromString(text, 'text/html');
-                const links = html.querySelectorAll('a');
-                
-                links.forEach(link => {
-                    const href = link.getAttribute('href');
-                    if (href && href.match(/\.(flac|mp3)$/i)) {
-                        this.playlist.push('mc/' + href);
-                        this.trackNames.push(decodeURIComponent(href.replace(/\.(flac|mp3)$/i, '')));
-                    }
-                });
-                
-                if (this.playlist.length > 0) {
+        fetch('assets.json')
+            .then(response => response.json())
+            .then(data => {
+                if (data.mc && data.mc.length > 0) {
+                    data.mc.forEach(file => {
+                        this.playlist.push('mc/' + file);
+                        this.trackNames.push(decodeURIComponent(file.replace(/\.(flac|mp3)$/i, '')));
+                    });
                     this.loadTrack(0);
                     this.renderPlaylist();
                 }

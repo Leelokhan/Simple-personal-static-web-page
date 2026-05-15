@@ -140,22 +140,14 @@
                 var bgImages = [];
         var currentBgIndex = 0;
         
-        // 加载bg文件夹中的所有图片
-        fetch('bg/')
-            .then(response => response.text())
-            .then(text => {
-                const parser = new DOMParser();
-                const html = parser.parseFromString(text, 'text/html');
-                const links = html.querySelectorAll('a');
-                
-                links.forEach(link => {
-                    const href = link.getAttribute('href');
-                    if (href && href.match(/\.(jpe?g|png|gif)$/i)) {
-                        bgImages.push('bg/' + href);
-                    }
-                });
-                
-                if (bgImages.length > 0) {
+        // 加载assets.json获取图片列表
+        fetch('assets.json')
+            .then(response => response.json())
+            .then(data => {
+                if (data.bg && data.bg.length > 0) {
+                    data.bg.forEach(file => {
+                        bgImages.push('bg/' + file);
+                    });
                     document.body.style.backgroundImage = `url('${bgImages[0]}')`;
                 }
             });

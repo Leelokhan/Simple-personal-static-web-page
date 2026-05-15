@@ -9,27 +9,23 @@ class VideoPlayer {
         
         this.loadVideos();
         this.setupVideoEndHandler();
-        this.setupVideoList();
     }
     
     async loadVideos() {
         try {
-            const response = await fetch('vd/');
-            const text = await response.text();
-            const parser = new DOMParser();
-            const html = parser.parseFromString(text, 'text/html');
-            const links = html.querySelectorAll('a');
+            const response = await fetch('assets.json');
+            const data = await response.json();
             
-            links.forEach(link => {
-                const href = link.getAttribute('href');
-                if (href && href.match(/\.(mp4|webm|ogg)$/i)) {
-                    this.videoFiles.push('vd/' + href);
-                    this.videoNames.push(decodeURIComponent(href.replace(/\.(mp4|webm|ogg)$/i, '')));
+            if (data.vd && data.vd.length > 0) {
+                data.vd.forEach(file => {
+                    this.videoFiles.push('vd/' + file);
+                    this.videoNames.push(decodeURIComponent(file.replace(/\.(mp4|webm|ogg)$/i, '')));
+                });
+                
+                if (this.videoFiles.length > 0) {
+                    this.video.src = this.videoFiles[0];
+                    this.setupVideoList();
                 }
-            });
-            
-            if (this.videoFiles.length > 0) {
-                this.video.src = this.videoFiles[0];
             }
         } catch (error) {
             console.error('Error loading videos:', error);
