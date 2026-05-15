@@ -35,23 +35,28 @@ const musicPlayer = {
     
     renderPlaylist: function() {
         if (!this.listElement) {
-            this.listElement = document.getElementById('music-playlist');
+            this.listElement = document.createElement('div');
+            this.listElement.style.maxHeight = '200px';
+            this.listElement.style.overflowY = 'auto';
+            this.listElement.style.marginTop = '10px';
+            document.getElementById('music-player').appendChild(this.listElement);
         }
         
         this.listElement.innerHTML = '';
         this.trackNames.forEach((name, index) => {
             const item = document.createElement('div');
-            item.className = 'playlist-item';
+            item.textContent = name;
+            item.style.padding = '5px';
+            item.style.cursor = 'pointer';
             if (index === this.currentTrackIndex) {
-                item.classList.add('active');
+                item.style.backgroundColor = '#add8e6';
+            } else {
+                item.style.backgroundColor = '';
             }
-            item.innerHTML = `<i class="fas \${index === this.currentTrackIndex && this.isPlaying ? 'fa-volume-up' : 'fa-play-circle'}"></i> \${name}`;
-            
-            item.addEventListener('click', () => {
+            item.addEventListener('dblclick', () => {
                 this.loadTrack(index);
-                this.isPlaying = true;
-                this.audioElement.play();
-                this.updateUI();
+                if (this.isPlaying) this.audioElement.play();
+                this.renderPlaylist(); // 重新渲染列表以更新高亮
             });
             this.listElement.appendChild(item);
         });
@@ -68,35 +73,23 @@ const musicPlayer = {
         if (this.isPlaying) {
             this.audioElement.pause();
         } else {
-            if (this.audioElement.src === '' && this.playlist.length > 0) {
-                this.loadTrack(0);
-            }
             this.audioElement.play();
         }
         this.isPlaying = !this.isPlaying;
-        this.updateUI();
-    },
-
-    updateUI: function() {
-        const playPauseBtn = document.getElementById('music-play-pause');
-        if (playPauseBtn) {
-            playPauseBtn.innerHTML = this.isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
-        }
-        this.renderPlaylist();
     },
 
     nextTrack: function() {
         const nextIndex = (this.currentTrackIndex + 1) % this.playlist.length;
         this.loadTrack(nextIndex);
         if (this.isPlaying) this.audioElement.play();
-        this.updateUI();
+        this.renderPlaylist();
     },
 
     prevTrack: function() {
         const prevIndex = (this.currentTrackIndex - 1 + this.playlist.length) % this.playlist.length;
         this.loadTrack(prevIndex);
         if (this.isPlaying) this.audioElement.play();
-        this.updateUI();
+        this.renderPlaylist();
     },
 
     setVolume: function(volume) {

@@ -38,14 +38,6 @@ class VideoPlayer {
         } else {
             this.video.pause();
         }
-        this.updateUI();
-    }
-
-    updateUI() {
-        const playPauseBtn = document.getElementById('video-play-pause');
-        if (playPauseBtn) {
-            playPauseBtn.innerHTML = this.video.paused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
-        }
     }
     
     nextVideo() {
@@ -55,7 +47,6 @@ class VideoPlayer {
             this.video.load();
             this.video.play().catch(error => console.error('Error playing video:', error));
             this.updateVideoName();
-            this.updateUI();
         }
     }
     
@@ -66,7 +57,6 @@ class VideoPlayer {
             this.video.load();
             this.video.play().catch(error => console.error('Error playing video:', error));
             this.updateVideoName();
-            this.updateUI();
         }
     }
     
@@ -84,38 +74,34 @@ class VideoPlayer {
     }
     
     setupVideoList() {
-        // Remove existing video list if any
-        const existingList = this.container.querySelector('.playlist');
-        if (existingList) existingList.remove();
-
         const videoListContainer = document.createElement('div');
-        videoListContainer.className = 'playlist';
         videoListContainer.style.marginTop = '10px';
-        videoListContainer.style.maxHeight = '100px';
+        videoListContainer.style.maxHeight = '150px';
+        videoListContainer.style.overflowY = 'auto';
         
+        // Only show videos from vd folder
         this.videoFiles.forEach((file, index) => {
-            const videoItem = document.createElement('div');
-            videoItem.className = 'playlist-item';
-            if (index === this.currentVideoIndex) {
-                videoItem.classList.add('active');
-            }
-            videoItem.innerHTML = `<i class="fas fa-video"></i> \${this.videoNames[index]}`;
-            
-            videoItem.addEventListener('click', () => {
-                this.currentVideoIndex = index;
-                this.video.src = this.videoFiles[index];
-                this.video.play();
-                this.updateVideoName();
-                this.updateUI();
+            if (file.startsWith('vd/')) {
+                const videoItem = document.createElement('div');
+                videoItem.style.padding = '5px';
+                videoItem.style.cursor = 'pointer';
+                videoItem.style.backgroundColor = index === this.currentVideoIndex ? '#f0f0f0' : 'transparent';
+                videoItem.textContent = this.videoNames[index];
                 
-                // Update selection highlight
-                Array.from(videoListContainer.children).forEach((child, i) => {
-                    if (i === index) child.classList.add('active');
-                    else child.classList.remove('active');
+                videoItem.addEventListener('click', () => {
+                    this.currentVideoIndex = index;
+                    this.video.src = this.videoFiles[index];
+                    this.video.play();
+                    this.updateVideoName();
+                    
+                    // Update selection highlight
+                    Array.from(videoListContainer.children).forEach((child, i) => {
+                        child.style.backgroundColor = i === index ? '#f0f0f0' : 'transparent';
+                    });
                 });
-            });
-            
-            videoListContainer.appendChild(videoItem);
+                
+                videoListContainer.appendChild(videoItem);
+            }
         });
         
         this.container.appendChild(videoListContainer);
