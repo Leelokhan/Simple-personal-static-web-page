@@ -19,6 +19,8 @@ https://github.com/Leelokhan/Simple-IP-Check-Page
 进阶→ 能把live2d模型放到任何网站   例： https://nz.562427418.xyz/  https://z.meizizi.nyc.mn/
 <img width="1913" height="916" alt="image" src="https://github.com/user-attachments/assets/72860bdd-1b58-49bf-af67-e9d508e1c727" />
 <img width="1909" height="918" alt="image" src="https://github.com/user-attachments/assets/83add36b-1ddd-4330-b1a8-45d888497e49" />
+<img width="1902" height="893" alt="ScreenShot_2026-05-15_183303_639" src="https://github.com/user-attachments/assets/575b0270-1d5d-474d-9c1d-15795cebc7ed" />
+
 试用我的代码在上面文件live2d窗口，我设置了只显示一个模型无法切换其他模型，还有音乐播放器更新代码
 
 
